@@ -56,3 +56,36 @@ sequenceDiagram
     
     Note over Navegador,JavaScript: No se recarga la página
 ```
+
+### 0.6: Nueva nota en diagrama de aplicación de una sola pagina
+
+```mermaid
+sequenceDiagram
+    participant Usuario
+    participant Navegador
+    participant JavaScript
+    participant Servidor
+
+    Usuario->>Navegador: Escribe una nueva nota
+    Usuario->>Navegador: Hace clic en "Guardar"
+    Navegador->>JavaScript: Dispara evento onsubmit
+    JavaScript->>JavaScript: e.preventDefault()
+    Note over JavaScript: Evita el envío tradicional del formulario
+
+    JavaScript->>JavaScript: Crea objeto nota
+    Note over JavaScript: {content: "texto de la nota", date: Date()}
+
+    JavaScript->>JavaScript: Agrega nota al array local
+    JavaScript->>JavaScript: Limpia el campo de entrada
+    JavaScript->>JavaScript: redrawNotes()
+    Note over JavaScript: Actualiza la vista con la nueva nota
+
+    JavaScript->>Servidor: POST /new_note_spa
+    Note over JavaScript,Servidor: Envía nota como JSON
+    Note over JavaScript,Servidor: Header: Content-type: application/json
+
+    Servidor->>Servidor: Procesa la nueva nota
+    Servidor-->>JavaScript: Respuesta 201 Created
+
+    Note over Navegador: La página no se recarga
+```
