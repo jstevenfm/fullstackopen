@@ -1,24 +1,24 @@
-const Hello = (props) => {
-  return (
-    <div>
-      <p>
-        Hello {props.name}, you are {props.age} years old
-      </p>
-    </div>
-  )
-}
+import { useState } from "react"
 
 const App = () => {
-  const name = 'Peter'
-  const age = 10
+  const [ counter, setCounter] = useState(0)
+
+  const increaseOne = () => setCounter(counter + 1)
+  const decreaseOne = () => setCounter(counter - 1)
+  const resetCounter = () => setCounter(0)
 
   return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={name} age={age} />
-    </div>
+    <>
+      <Display counter={counter}/>
+      <Btn onClick={increaseOne} title='Increase one'/>
+      <Btn onClick={resetCounter} title='Reset counter'/>
+      <Btn onClick={decreaseOne} title='Decrease one'/>
+    </>
   )
 }
+
+const Display = ({ counter }) => <div>{counter}</div>
+
+const Btn = ({ onClick, title }) => <button onClick={onClick}>{title}</button>
 
 export default App
