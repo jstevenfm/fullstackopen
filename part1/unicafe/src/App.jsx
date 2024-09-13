@@ -4,13 +4,13 @@ const Btn = ({ onClick, title }) => <button onClick={onClick}>{title}</button>
 
 const Display = ({ title, counter }) => <p>{title}: {counter}</p>
 
+const Statistics = ({ title, value}) => <p>{title}: {value}</p>
+
 const App = () => {
   const [ good, setGood] = useState(0)
   const [ neutral, setNeutral] = useState(0)
   const [ bad, setBad] = useState(0)
   const all = good + neutral + bad
-  const average = all > 0 ? (good - bad) / all : 0
-  const positive = all > 0 ? (good * 100) / 9 : 0
 
   return (
     <>
@@ -23,9 +23,9 @@ const App = () => {
       <Display title='Good' counter={good} />
       <Display title='Neutral' counter={neutral} />
       <Display title='Bad' counter={bad} />
-      <Display title='All comments' counter={all} />
-      <Display title='Average' counter={average} />
-      <Display title='Positive' counter={positive} />
+      <Statistics title='All comments' value={all} />
+      <Statistics title='Average' value={all > 0 ? (good - bad) / all : 0} />
+      <Statistics title='Positive' value={all > 0 ? (good * 100) / 9 : 0} />
     </>
   )
 }
