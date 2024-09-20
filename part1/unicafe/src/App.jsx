@@ -2,7 +2,7 @@ import { useState } from "react"
 
 const Btn = ({ onClick, title }) => <button onClick={onClick}>{title}</button>
 
-const Display = ({ title, counter }) => <p>{title}: {counter}</p>
+const StatisticLine = ({ title, counter }) => <p>{title}: {counter}</p>
 
 const Statistics = ({ good, neutral, bad}) => {
   const all = good + neutral + bad
@@ -15,12 +15,12 @@ const Statistics = ({ good, neutral, bad}) => {
 
   return (
     <>
-      <Display title='Good' counter={good} />
-      <Display title='Neutral' counter={neutral} />
-      <Display title='Bad' counter={bad} />
-      <Display title='All comments' counter={all} />
-      <Display title='Average' counter={average} />
-      <Display title='Positive' counter={positive} />
+      <StatisticLine title='Good' counter={good} />
+      <StatisticLine title='Neutral' counter={neutral} />
+      <StatisticLine title='Bad' counter={bad} />
+      <StatisticLine title='All comments' counter={all} />
+      <StatisticLine title='Average' counter={average} />
+      <StatisticLine title='Positive' counter={positive} />
     </>
   )
 }
