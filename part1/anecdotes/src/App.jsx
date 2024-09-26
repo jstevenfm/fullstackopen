@@ -23,20 +23,50 @@ const App = () => {
 
   const votes = new Uint8Array(anecdotes.length)
   const [point, setPoint] = useState(votes)
+  const [topIndex, setTopIndex] = useState(0)
+  const [topVote, setTopVote] = useState(0)
+
+  const mostVoted = () => {
+    for (let i = 0; i < point.length; i++){
+      if (point[i] > topVote) {
+        setTopIndex(i)
+        setTopVote(point[i])
+      }
+    }
+    
+    if(topVote === 0) {
+      return (
+        <>
+          <p>No votes yet!</p>
+        </>
+      )
+    }
+    return (
+      <>
+        <p>{anecdotes[topIndex]}</p>
+        <p>Has {topVote} votes</p>
+      </>
+    )
+  }
 
   const updateVotes = () => {
     const newVote = [...point]
     newVote[selected] += 1
     setPoint(newVote)
-    console.log(point)
+    mostVoted()
   }
 
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
-      <p>has {point[selected]} votes</p>
+      <p>Has {point[selected]} votes</p>
       <Btn onClick={() => (updateVotes())} title='Vote'/>
       <Btn onClick={() => setSelected(newAnecdote())} title='Next anecdote'/>
+      <h2>Anecdote with most votes</h2>
+      {/* <p>{anecdotes[topIndex]}</p>
+      <p>Has {topVote} votes</p> */}
+      {mostVoted()}
     </>
   )
 }
