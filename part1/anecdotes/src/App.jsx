@@ -4,6 +4,7 @@ const newAnecdote = () => {
   return Math.floor(Math.random() * 8)
 }
 
+// eslint-disable-next-line react/prop-types
 const Btn = ({ onClick, title }) => <button onClick={onClick}>{title}</button>
 
 
