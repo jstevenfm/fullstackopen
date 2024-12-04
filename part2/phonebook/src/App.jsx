@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
+import PersonList from './components/PersonList'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -23,52 +27,16 @@ const App = () => {
     setShowPerson(false)
   }
 
-  const ValidatePerson = (event) =>{
-    event.preventDefault()
-    const found = (person) => person.name === newName
-    const foundPerson = persons.some(found)
-    if (foundPerson) {
-      return alert(`${newName} is already added to phonebook`)
-    }
-    addName()
-  }
-  
-  const addName = () => {
-
-    const nameObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1
-    }
-
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
-  }
-
-  const Person = ({ person }) => <li>{person.name} {person.number}</li>
-
   const personToShow = showPerson ? persons : persons.filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>Filter shown with: <input value={filterName} onChange={handleFilterNameChange} /></div>
-      <div>Debug: {filterName}</div>
+      <Filter filterName={filterName} handleFilterNameChange={handleFilterNameChange} />
       <h3>Add a new person</h3>
-      <form onSubmit={ValidatePerson}>
-        <div>Name: <input value={newName} onChange={handleNameChange} /></div>
-        <div>Number: <input type='tel' value={newNumber} onChange={handleNumberChange} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} persons={persons} setPersons={setPersons} setNewName={setNewName} setNewNumber={setNewNumber} />
       <h3>Numbers</h3>
-      <ul>
-        {personToShow.map(person =>
-          <Person key={person.id} person={person} />
-        )}
-      </ul>
+      <PersonList persons={personToShow} />
     </div>
   )
 }
