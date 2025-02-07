@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Note from "./components/Note";
 import noteService from "./services/notes";
 
@@ -18,9 +17,14 @@ const App = () => {
     const note = notes.find((n) => n.id === id);
     const changedNote = { ...note, important: !note.important };
 
-    noteService.update(id, changedNote).then(returnedNote => {
-      setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
-    });
+    noteService
+      .update(id, changedNote).then(returnedNote => {
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
+      })
+      .catch(error => {
+        alert(`The note '${note.content}' was already deleted from server`)
+        setNotes(notes.filter(n => n.id !== id));
+      });
   };
 
   const addNote = (event) => {
